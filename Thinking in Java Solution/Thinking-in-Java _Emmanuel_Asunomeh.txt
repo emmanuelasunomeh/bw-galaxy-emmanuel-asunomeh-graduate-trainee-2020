@@ -1,0 +1,732 @@
+Chapter - 2 (Everything is an Object)
+Exercise 1
+public class IntChar {
+	static int i;
+	static char c;	
+	public static void main(String[] args) {		
+		System.out.println("int = " + i);
+		System.out.println("char = " + c);
+	}
+}
+
+Exercise 5
+public class ModifyDataOnly {		
+	public static void main(String[] args) {
+		class DataOnly {
+			int i;
+			double d;
+			boolean b;
+			void show() {
+				System.out.println(i);
+				System.out.println(d);
+				System.out.println(b);	
+			}
+		}	
+		DataOnly data = new DataOnly();
+		data.i = 234;
+		data.d = 2.1234545;
+		data.b = true;		
+		data.show();
+	}
+}
+
+
+Cahpter 3 - (Operators)
+Exercise 1
+import static net.mindview.util.Print.*;
+
+public class PrintTest {
+	public static void main(String[] args) {
+		print("Hello, from short form.");
+		System.out.println("Hello from long form.");
+	}
+}
+
+Exercise 14
+public class StringCompare {	
+	static void f(boolean b) {if(b == true) P.rintln(true);
+		else System.out.println(false);}
+	static void stringTest(String s, String t) {
+		f(s == t);
+		f(s.equals(t));
+		f(t.equals(s));
+		f(s != t);
+		// f(!s);
+		//f(!t);
+		// s = s && t;
+		// s = s || t;
+		// s = ~t;
+		// s = s  & t;
+		// s = s | t;
+		// s = s ^ t;
+		// s &= t;
+		// s ^= t;
+		// s |= t;
+	}	
+	public static void main(String[] args) {
+		String s = "one", t = "two";
+		StringWork.stringTest(s, t);		
+	}
+}
+
+chapter 4 - (Controlling Execution)
+
+Exercise 1
+public class FirstHundredCount{
+	public static void main(String[] args) {
+		for(int i = 1; i < 101; i++)
+			System.out.println(i);
+	}
+} 
+Exercise 4
+public class PrimeNumbers {
+	public static void main(String[] args) {
+		for(int i = 1; i < 1000; i++ ) {
+			int factors = 0;
+			for(int j = 1; j < (i + 2)/2; j++ ) {
+				if((i % j) == 0) factors++; 			
+			}
+			if(factors < 2) System.out.println(i + " is prime");
+		}
+	}
+}
+
+chapter - 5 (Initialization & Cleanup)
+Exercise 2
+class Test {
+	String s1;
+	String s2 = "hello";
+	String s3;
+	Tester2() { s3 = "good-bye"; }
+}
+
+public class ConstructorTest {
+	public static void main(String[] args) {
+		Tester2 t = new Tester2();
+		System.out.println("t.s1: " + t.s1);
+		System.out.println("t.s2: " + t.s2);
+		System.out.println("t.s3: " + t.s3);
+	}
+}
+
+Exercise 15
+class Tester {
+	String s;
+	{
+		s = "Initializing string in Tester";
+		System.out.println(s);
+	}
+	Tester() {
+		System.out.println("Tester()");
+	}
+}
+
+public class InstanceClauseTest {
+	public static void main(String[] args) {
+		new Tester();				
+	}
+}
+
+
+Chapter Access Control
+
+Exercise 1
+/* In another directory:
+* // access/mypackage/MyPackagedClass.java
+*
+* package access.mypackage;
+*
+* public class MyPackagedClass {
+*	public MyPackagedClass() {System.out.println("MyPackagedClass()");}
+* }	
+*/
+
+public class UnpackagedMyClass {
+	public static void main(String[] args) {
+		access.mypackage.MyPackagedClass m = new access.mypackage.MyPackagedClass();
+	}
+}
+
+Exercise 2
+import net.mindview.simple.*;
+import java.util.*;
+ 
+public class Collision {
+	public static void main(String[] args) {
+		// Vector v = new Vector(); // ambiquous collision
+		net.mindview.simple.Vector v1 = new net.mindview.simple.Vector();
+		java.util.Vector v2 = new java.util.Vector();
+	}
+}
+
+Chapter Reuseable Classes
+
+Exercise 1
+class Engine {
+	private String s;
+	Engine() {
+		println("Engine()");
+		s = "Constructed";
+	}
+	public String toString() { return s; }
+}
+
+public class Airplane {
+	private String fuselage, wings, tail;
+	private Engine e;
+	public Airplane() {
+		println("Inside Airplane()");
+		fuselage = "Body";
+		wings = "Airfoils";
+		tail = "Empennage";				
+	}
+	public String toString() { 
+		if(e == null) // lazy (delayed) initialization:
+			e = new Engine();
+		return "fuselage = " + fuselage + ", " +
+			"wings = " + wings + ", " +
+			"tail = " + tail + ", " +
+			"Engine = " + e;
+	}
+	public static void main(String[] args) {
+		Airplane N1234 = new Airplane();
+		print(N1234);
+	}
+}
+
+Exercise 2
+public class Sterilizer extends Detergent {
+	public void scrub() { append(" Sterilizer.scrub()"); }
+	public void sterilize() { append(" sterilize()"); }
+	public static void main(String[] args) {
+		Sterilizer x = new Sterilizer();
+		x.dilute();
+		x.apply();	
+		x.scrub();
+		x.foam();
+		x.sterilize();
+		println(x);
+		println("Testing base class:");
+		Detergent.main(args);
+	}
+}
+
+Chapter Polymorphism
+
+Chapter 1
+package polymorphism.biking;
+import static org.greggordon.tools.Print.*;
+
+class Cycle {
+	private String name = "Cycle";
+	public static void travel(Cycle c) {
+		println("Cycle.ride() " + c);
+	}
+	public String toString() {
+		return this.name;
+	}
+}
+
+class Unicycle extends Cycle {
+	private String name = "Unicycle";
+	public String toString() {
+		return this.name;
+	}	
+}
+
+class Bicycle extends Cycle {
+	private String name = "Bicycle";
+	public String toString() {
+		return this.name;
+	}	
+
+}
+
+class Tricycle extends Cycle {
+	private String name = "Tricycle";
+	public String toString() {
+		return this.name;
+	}	
+}
+
+public class Biking {
+	public static void ride(Cycle c) {
+		c.travel(c);
+	}
+	public static void main(String[] args) {
+		Unicycle u = new Unicycle();
+		Bicycle b = new Bicycle();
+		Tricycle t = new Tricycle();
+		ride(u);
+		ride(b);
+		ride(t);		
+	}
+}
+
+Exercise 2
+import static net.mindview.util.Print.*;
+* public class Circle extends Shape {
+*	@Override public void draw() { print("Circle.draw()"); }
+*	@Override public void erase() { print("Circle.erase()"); }
+* }
+* // and:
+*import java.util.*;
+* public class RandomShapeGenerator {
+*	private Random rand = new Random();
+*	public Shape next() {
+*		switch(rand.nextInt(3)) {
+*			default:
+*			case 0: return new Circle();
+*			case 1: return new Square();
+*			case 2: return new Triangle();
+*		}
+*	}
+* }
+* // and:
+* public class Shape {
+*	public void draw() {}
+*	public void erase() {}
+* }
+* // and:
+* import static net.mindview.util.Print.*;
+* public class Square extends Shape {
+*	@Override public void draw() { print("Square.draw()"); }
+*	@Override public void erase() { print("Square.erase()"); }
+* }
+* // and: 
+* import static net.mindview.util.Print.*;
+* public class Triangle extends Shape {
+*	@Override public void draw() { print("Triangle.draw()"); }
+*	@Override public void erase() { print("Triangle.erase()"); }
+* }
+*/
+
+import polymorphism.shape.*;
+
+public class Shapes {
+	private static RandomShapeGenerator gen = new RandomShapeGenerator();
+	public static void main(String[] args) {
+		Shape[] s = new Shape[10];
+		// fill up the array wth shapes:
+		for(int i = 0; i < s.length; i++)
+			s[i] = gen.next();
+		// make polymorphic method calls:
+		for(Shape shp : s)
+			shp.draw();	
+	}
+}
+
+Chapter Interface
+
+Exercise 1
+* import java.util.*;
+* public class RandomRodentGenerator1 {
+*	private Random rand = new Random();
+*	public Rodent next() {
+*		switch(rand.nextInt(3)) {
+*			default:
+*			case 0: return new Mouse();
+*			case 1: return new Rat();
+*			case 2: return new Squirrel();			
+*		}
+*	}
+* }
+*/
+
+package interfaces.rodent;
+import static org.greggordon.tools.Print.*;
+
+abstract class Rodent {
+	private String name = "Rodent";
+	abstract protected void eat(); 
+	abstract protected void run(); 
+	abstract protected void sleep();
+	abstract public String toString(); 
+}
+
+class Mouse extends Rodent {
+	private String name = "Mouse";
+	protected void eat() { println("Mouse.eat()"); }
+	protected void run() { println("Mouse.run()"); }
+	protected void sleep() { println("Mouse.sleep()"); }
+	public String toString() { return name; }
+}
+
+class Rat extends Rodent {
+	private String name = "Rat";
+	protected void eat() { println("Rat.eat()"); }
+	protected void run() { println("Rat.run()"); }
+	protected void sleep() { println("Rat.sleep()"); }
+	public String toString() { return name; }
+}
+
+class Squirrel extends Rodent {
+	private String name = "Squirrel";
+	protected void eat() { println("Squirrel.eat()"); }
+	protected void run() { println("Squirrel.run()"); }
+	protected void sleep() { println("Squirrel.sleep()"); }
+	public String toString() { return name; }
+}
+
+public class Rodent1 {
+	private static RandomRodentGenerator1 gen = new RandomRodentGenerator1();
+	public static void main(String[] args) {
+		// Error: cannot instantiate abstract class:
+		// Rodent x = new Rodent();
+		// But OK to create array to be downcast to derived objects:
+		Rodent[] rodents = new Rodent[10];
+		for(Rodent r : rodents) {
+			r = gen.next();
+			println(r + ": ");
+			r.eat();
+			r.run();
+			r.sleep();			
+		}		
+	}
+}
+
+Exercise 2
+abstract class Nogo1 {
+	Nogo1() { System.out.println("Nogo1()"); }
+}
+
+abstract class Nogo2 {}
+
+class Go1 extends Nogo1 {
+	Go1() { System.out.println("Go1()"); }
+}
+
+public class Ex2 {
+	public static void main(String[] args) {
+		// Nogo1 and Nogo2 cannot be instantiated:
+		// Nogo1 ng1 = new Nogo1();
+		// Nogo2 ng2 = new Nogo2();
+		// But Nogo1() constructor called during instatiation of child: 	
+		Go1 g1 = new Go1();
+	}
+}
+
+Chapter InnerClasses
+
+Exercise 1
+public class Outer1 {
+	class Inner { 
+		Inner() { System.out.println("Inner()"); }
+	}
+	Outer1() { System.out.println("Outer1()"); }
+	// make an Inner from within a non-static method of outer class:
+	Inner makeInner() {
+		return new Inner();
+	}
+	public static void main(String[] args) {
+		Outer1 o = new Outer1();
+		Inner i = o.makeInner();
+	}
+}
+
+Exercise 2
+class Word {
+	private String word;
+	public Word(String s) { word = s; }
+	public String toString() { return word; }
+} 
+
+interface Selector {
+	boolean end();
+	Object current();
+	void next();
+}
+
+public class Sequence2 {
+	private Object[] items;
+	private int next = 0;
+	public Sequence2(int size) { items = new Object[size]; }
+	public void add(Object x) {
+		if(next < items.length)
+			items[next++] = x;
+	}
+	private class SequenceSelector implements Selector {
+		private int i = 0;
+		public boolean end() { return i == items.length; }
+		public Object current() { return items[i]; }
+		public void next() { if(i < items.length) i++; } 
+	}
+	public Selector selector() {
+		return new SequenceSelector();
+	}
+	public static void main(String[] args) {
+		Sequence2 sequence = new Sequence2(10);
+		for(int i = 0; i < 10; i++)
+			sequence.add(new Word(Integer.toString(i)));
+		Selector selector = sequence.selector();
+		while(!selector.end()) {
+			System.out.print(selector.current() + " ");
+			selector.next();
+		}
+		Word w1 = new Word("Peace");
+		Word w2 = new Word("Love");
+		Word w3 = new Word("Easter");
+		Sequence2 message = new Sequence2(3);
+		message.add(w1);
+		message.add(w2);
+		message.add(w3);
+		Selector sel = message.selector();
+		while(!sel.end()) {
+			System.out.print(sel.current() + " ");
+			sel.next();
+		}
+			
+	}
+}
+
+Chapter Holding Your Objects
+
+Exercise 1
+import java.util.*;
+
+class Gerbil {
+	private int gerbilNumber;
+	public Gerbil(int i) {
+		gerbilNumber = i;
+	}
+	public void hop() {
+		System.out.println("Gerbil " + gerbilNumber + " hops");
+	}
+}
+
+public class Ex1 {
+	public static void main(String[] args) {
+		ArrayList<Gerbil> gerbils = new ArrayList<Gerbil>();
+		for(int i = 0; i < 10; i++)
+			gerbils.add(new Gerbil(i));
+		for(int i = 0; i < 10; i++) 
+			gerbils.get(i).hop();
+		// or, alternatively, using foreach syntax:
+		for(Gerbil g : gerbils)
+			g.hop();
+	}
+}
+Exercise 2
+import java.util.*;
+
+public class Ex2 {
+	public static void main(String[] args) {
+		Set<Integer> c = new HashSet<Integer>();
+		for(int i = 0; i < 10; i++)
+			c.add(i); // Autoboxing
+		for(Integer i : c)
+			System.out.print(i + ", ");
+	}	
+}
+
+Chapter Error Handling with Exceptions Strings
+
+Exercise 1
+class Exception1 extends Exception {
+	public Exception1(String msg) { 
+		super(msg); 
+		System.out.println("Exception1(String msg)");
+	}
+}
+
+public class Ex1 {
+	public static void f() throws Exception1 {
+		System.out.println("Throwing MyException from f()");
+		throw new Exception1("From f()");
+	}
+	public static void main(String[] args) {
+		try {
+			f();
+		} catch(Exception1 e) {
+			System.err.println("Caught Exception1");
+			e.printStackTrace();
+		} finally {
+			System.out.println("Made it to finally");
+		}
+		
+	}	
+}
+Exercise 2
+public class Ex2 {
+	private static Integer i = null;	
+	public static void main(String[] args) {
+		// leads to NullPointerException:
+		// System.out.println(i.toString());
+		try {
+			System.out.println(i.toString());
+		} catch(NullPointerException e) {
+			System.err.println("Caught NullPointerException");
+			e.printStackTrace();
+		} 
+		try {
+			i = 10;
+			System.out.println(i.toString());
+		} catch(NullPointerException e) {
+			System.err.println("Caught NullPointerException");
+			e.printStackTrace();
+		} finally {
+			System.out.println("Got through it");
+		}
+	}	
+}
+
+Chapter Strings
+
+Exercise 1
+class WaterSource {
+	private String s;
+	WaterSource() {
+		System.out.println("WaterSource()");
+		s = "Constructed";
+	}
+	public String toString() { return s; }
+}
+
+public class SprinklerSystem1 {
+	private String valve1, valve2, valve3, valve4;	
+	private WaterSource source = new WaterSource();
+	private int i;
+	private float f;
+	// appears to create only one StringBuilder: (using javap -c)
+	public String toString() {
+		return
+			"valve1 = " + valve1 + " " + 
+			"valve2 = " + valve2 + " " +
+			"valve3 = " + valve3 + " " +
+			"valve4 = " + valve4 + " " +
+			"i = " + i + " " + "f = " + f + " " +
+			"source = " + source;
+	}
+	public static void main(String[] args) {
+		SprinklerSystem1 sprinklers = new SprinklerSystem1();
+		System.out.println(sprinklers);
+	}
+}
+
+Exercise 2
+import java.util.*;
+
+public class InfiniteRecursion2 {	
+	public String toString() {
+		return " InfiniteRecursion address: " + super.toString() + "\n";
+	}
+	public static void main(String[] args) {
+		List<InfiniteRecursion2> v = new ArrayList<InfiniteRecursion2>();
+		for(int i = 0; i < 10; i++)
+			v.add(new InfiniteRecursion2());
+		System.out.println(v);
+	}
+}
+
+
+Chapter Type Information
+
+Exercise 1
+package typeinfo.toys;
+import static net.mindview.util.Print.*;
+
+interface HasBatteries {}
+interface Waterproof {}
+interface Shoots {}
+
+class Toy {
+	// With default constructor commented out will be
+	// unable to instantiate this Toy, super of FancyToy:
+	// Toy() {}
+	Toy(int i) {}
+}
+
+class FancyToy extends Toy 
+	implements HasBatteries, Waterproof, Shoots {
+		FancyToy() { super(1); }
+}
+
+public class ToyTest1 {
+	static void printInfo(Class cc) {
+		print("Class name: " + cc.getName() +
+			" is interface? [" + cc.isInterface() + "]");
+		print("Simple name: " + cc.getSimpleName());
+		print("Canonical name: " + cc.getCanonicalName());
+	}
+	public static void main(String[] args) {
+		Class c = null;
+		try {
+			c = Class.forName("typeinfo.toys.FancyToy");
+		} catch(ClassNotFoundException e) {
+			print("Can't find FancyToy");
+			System.exit(1);
+		}
+		printInfo(c);
+		for(Class face : c.getInterfaces())
+			printInfo(face);
+		Class up = c.getSuperclass();
+		Object obj = null;
+		try {
+			// Requires default constructor in order to
+			// create a super or Toy object:
+			obj = up.newInstance();
+		} catch(InstantiationException e) {
+			print("Cannot instantiate");
+			System.exit(1);
+		} catch(IllegalAccessException i) {
+			print("Cannot access");
+			System.exit(1);
+		}
+		printInfo(obj.getClass());
+	}
+}
+
+Exercise 2
+package typeinfo.toys;
+import static net.mindview.util.Print.*;
+
+interface HasBatteries {}
+interface Waterproof {}
+interface Shoots {}
+interface Flies {}
+
+class Toy {
+	// Comment out the following default constructor
+	// to see NoSuchMethodError from (*1*)
+	Toy() {}
+	Toy(int i) {}
+}
+
+class FancyToy extends Toy 
+	implements HasBatteries, Waterproof, Shoots, Flies {
+		FancyToy() { super(1); }
+}
+
+public class ToyTest2 {
+	static void printInfo(Class cc) {
+		print("Class name: " + cc.getName() +
+			" is interface? [" + cc.isInterface() + "]");
+		print("Simple name: " + cc.getSimpleName());
+		print("Canonical name: " + cc.getCanonicalName());
+	}
+	public static void main(String[] args) {
+		Class c = null;
+		try {
+			c = Class.forName("typeinfo.toys.FancyToy");
+		} catch(ClassNotFoundException e) {
+			print("Can't find FancyToy");
+			System.exit(1);
+		}
+		printInfo(c);
+		for(Class face : c.getInterfaces())
+			printInfo(face);
+		Class up = c.getSuperclass();
+		Object obj = null;
+		try {
+			// Requires default constructor:
+			obj = up.newInstance();
+		} catch(InstantiationException e) {
+			print("Cannot instantiate");
+			System.exit(1);
+		} catch(IllegalAccessException i) {
+			print("Cannot access");
+			System.exit(1);
+		}	
+		printInfo(obj.getClass());
+	}
+}
